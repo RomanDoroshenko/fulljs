@@ -7,7 +7,7 @@ import apiRouter from './api/index';
 const app = express();
 const server = http.createServer(app);
 
-app.set('view engine','pug');
+app.set('view engine','jade');
 app.set('port', process.env.PORT || 3000);
 app.use('/api', apiRouter);
 app.use(express.static('public'));
@@ -15,7 +15,7 @@ app.use(express.static('public'));
 
 app.get('/',(req,res) => {
   res.render('index');
- 
+
 });
 
 reload(server,app);
