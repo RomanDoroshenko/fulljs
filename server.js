@@ -1,4 +1,5 @@
 import http from 'http';
+import config from './config'
 import express from 'express';
 import reload from 'reload';
 import apiRouter from './api/index';
@@ -19,14 +20,23 @@ app.set('port', process.env.PORT || 3000);
 app.use('/api', apiRouter);
 app.use(express.static('public'));
 
+import serverRender from './serverRender';
+
 
 app.get('/',(req,res) => {
-  res.render('index');
+  serverRender()
+    .then((resp) => {
+      res.render('index', {
+        initialMarkup: resp.initialMarkup,
+        initialData: resp.initialData
+      });
+    })
+    .catch(console.error);
 
 });
 
 reload(server,app);
 
-server.listen(app.get('port'), () => {
-  console.log(`listening on port ${app.get('port')}`);
+server.listen(config.port,config.host, () => {
+  console.info('Express is listening on port', config.port);
 });

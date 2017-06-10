@@ -1,6 +1,9 @@
+
+script window.initialData = !{JSON.stringify(initialData)}
 include header
 body.container
   div#root
+    != initialMarkup
   include scripts
    
     
