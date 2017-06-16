@@ -23,8 +23,10 @@ app.use(express.static('public'));
 import serverRender from './serverRender';
 
 
-app.get('/',(req,res) => {
-  serverRender()
+app.get(['/','/contest/:contestId'],(req,res) => {
+
+
+  serverRender(req.params.contestId)
     .then((resp) => {
       res.render('index', {
         initialMarkup: resp.initialMarkup,
